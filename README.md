@@ -1,2 +1,4 @@
 # CI-CD
-Repository for test CI/CD
+Repository for testing CI/CD
+
+Bogomolov R.D.
