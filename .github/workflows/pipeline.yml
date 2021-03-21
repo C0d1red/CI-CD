@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 14
-      - name: Building project
+      - name: Build project
         run: mvn -B package --file pom.xml
       - name: Docker login
         run: docker login ghcr.io --username $GITHUB_ACTOR --password ${{ secrets.PAT }}
@@ -24,13 +24,12 @@ jobs:
         run: docker build . -t ${{ secrets.PACKAGE }}
       - name: Publish Docker image
         run: docker push ${{ secrets.PACKAGE }}
-      - name: Login via ssh
+      - name: Login on server
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.RSA }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.RSA }}" > ~/.ssh/rsa
+          chmod 600 ~/.ssh/rsa
           ssh-keyscan -H ${{ secrets.SERVER }} > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
       - name: Deploy
-        run: ssh -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.SERVER }} "bash ~/deploy.sh $GITHUB_ACTOR ${{ secrets.PAT }} ${{ secrets.PACKAGE }}"
-      
+        run: ssh -i ~/.ssh/rsa ${{ secrets.USERNAME }}@${{ secrets.SERVER }} "bash ~/deploy.sh $GITHUB_ACTOR ${{ secrets.PAT }} ${{ secrets.PACKAGE }}"
