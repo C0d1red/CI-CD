@@ -1,4 +1,4 @@
 # CI-CD
-Repository for testing CI/CD
+Universal CI/CD for java maven.
 ---------
 Bogomolov R.D.
