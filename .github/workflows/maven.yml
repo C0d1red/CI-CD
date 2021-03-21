@@ -39,7 +39,7 @@ jobs:
       - name: Login via ssh
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.RSA }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER }} > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
